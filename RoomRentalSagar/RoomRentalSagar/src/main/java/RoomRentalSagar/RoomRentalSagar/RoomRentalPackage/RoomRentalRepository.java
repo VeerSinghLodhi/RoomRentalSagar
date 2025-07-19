@@ -8,7 +8,7 @@ import java.util.Optional;
 @Repository
 public interface RoomRentalRepository extends JpaRepository<RoomRental,Integer> {
 
-     RoomRental findByEmailAndPassword(String email,String password);
+     Optional<RoomRental> findByEmailAndPassword(String email,String password);
 
      Optional<RoomRental> findByEmail(String email);
 }
