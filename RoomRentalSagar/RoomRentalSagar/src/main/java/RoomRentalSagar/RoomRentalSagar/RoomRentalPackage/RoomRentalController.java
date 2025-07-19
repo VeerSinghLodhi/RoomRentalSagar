@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class RoomRentalController {
@@ -46,11 +47,16 @@ public class RoomRentalController {
     }
 
     @GetMapping("/checkuser")
-    public String getDashboard(@RequestParam String email, @RequestParam String password, HttpSession session, Model model){
-        RoomRental roomRental=roomRentalRepository.findByEmailAndPassword(email,password);
-        session.setAttribute("roomRental",roomRental);
-        model.addAttribute("roomRental",roomRental);
-        return "Forms/dashboard";
+    public String getDashboard(String email, String password, HttpSession session, Model model){
+        Optional<RoomRental> roomRental=roomRentalRepository.findByEmailAndPassword(email,password);
+        System.out.println("Inside the Check User");
+        if(roomRental.isPresent()){
+            session.setAttribute("roomRental",roomRental.get());
+            model.addAttribute("roomRental",roomRental.get());
+            return "Forms/dashboard";
+        }
+        model.addAttribute("invalid","Invalid credential");
+        return "Forms/login";
     }
 
     @GetMapping("/checkemail")
