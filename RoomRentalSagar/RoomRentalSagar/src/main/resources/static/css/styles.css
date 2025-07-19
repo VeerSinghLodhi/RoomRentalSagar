@@ -93,14 +93,21 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Hero Section */
-.hero-section {
-    background: var(--gradient-primary);
+.hero-sectiona {
+   /* background: var(--gradient-primary); */
+  /* background-color:white;*/
+  background: url('../Images/heroimage2.jpg');
     min-height: 80vh;
     display: flex;
     align-items: center;
     position: relative;
     overflow: hidden;
 }
+/*
+#hero-container{
+
+       object-fit: cover;
+}*/
 
 .hero-section::before {
     content: '';
