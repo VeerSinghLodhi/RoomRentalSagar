@@ -49,6 +49,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Navigation */
+/*
 .navbar {
     transition: var(--transition);
     backdrop-filter: blur(10px);
@@ -90,56 +91,9 @@ h1, h2, h3, h4, h5, h6 {
 .navbar-nav .nav-link:hover::after,
 .navbar-nav .nav-link.active::after {
     width: 100%;
-}
-
-/* Hero Section */
-.hero-sectiona {
-   /* background: var(--gradient-primary); */
-  /* background-color:white;*/
-  background: url('../Images/heroimage2.jpg');
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-}
-/*
-#hero-container{
-
-       object-fit: cover;
 }*/
 
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-}
-
-.hero-section .container {
-    position: relative;
-    z-index: 2;
-}
-
-.hero-section h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.hero-section .lead {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.min-vh-75 {
-    min-height: 75vh;
-}
+/* Hero Section */
 
 /* Buttons */
 .btn {
@@ -347,6 +301,8 @@ footer a,p {
 footer a:hover {
     color: white;
 }
+
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
