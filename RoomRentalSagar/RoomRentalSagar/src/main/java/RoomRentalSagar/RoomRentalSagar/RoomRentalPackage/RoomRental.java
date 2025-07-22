@@ -1,40 +1,42 @@
-package RoomRentalSagar.RoomRentalSagar.RoomRentalPackage;
+package RoomRentalSagar.RoomRentalSagar.RoomOwnersPackage;
 
 import jakarta.persistence.*;
 
 import java.util.Date;
 
 @Entity
-@Table(name = "roomrental")
-public class RoomRental {
+@Table(name = "roomowners")
+public class RoomOwners {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int roomrentalid;
+    int id;
 
-    private String firstname,lastname,email,phonenumber,password;
+    private String firstname,address,lastname,email,phone_num,password;
     private char status;
     private Date joiningdate;
 
-    public RoomRental() {
+    byte profile_pic[];
+
+    public RoomOwners() {
     }
 
-    public RoomRental(int roomrentalid, String firstname, String lastname, String email, String phonenumber, String password, char status, Date date) {
-        this.roomrentalid = roomrentalid;
+    public RoomOwners(int roomrentalid, String firstname, String lastname, String email, String phonenumber, String password, char status, Date date) {
+        this.id = roomrentalid;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
-        this.phonenumber = phonenumber;
+        this.phone_num = phonenumber;
         this.password = password;
         this.status = status;
         this.joiningdate = date;
     }
 
     public int getRoomrentalid() {
-        return roomrentalid;
+        return id;
     }
 
     public void setRoomrentalid(int roomrentalid) {
-        this.roomrentalid = roomrentalid;
+        this.id = roomrentalid;
     }
 
     public String getFirstname() {
@@ -78,11 +80,11 @@ public class RoomRental {
     }
 
     public String getPhonenumber() {
-        return phonenumber;
+        return phone_num;
     }
 
     public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+        this.phone_num = phonenumber;
     }
 
     public String getPassword() {
@@ -91,5 +93,37 @@ public class RoomRental {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone_num() {
+        return phone_num;
+    }
+
+    public void setPhone_num(String phone_num) {
+        this.phone_num = phone_num;
+    }
+
+    public byte []getProfile_pic() {
+        return profile_pic;
+    }
+
+    public void setProfile_pic(byte [] profile_pic) {
+        this.profile_pic = profile_pic;
     }
 }
