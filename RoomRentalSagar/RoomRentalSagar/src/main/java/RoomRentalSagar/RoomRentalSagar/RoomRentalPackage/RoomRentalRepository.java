@@ -1,4 +1,4 @@
-package RoomRentalSagar.RoomRentalSagar.RoomRentalPackage;
+package RoomRentalSagar.RoomRentalSagar.RoomOwnersPackage;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface RoomRentalRepository extends JpaRepository<RoomRental,Integer> {
+public interface RoomOwnersRepository extends JpaRepository<RoomOwners,Integer> {
 
-     Optional<RoomRental> findByEmailAndPassword(String email,String password);
+     Optional<RoomOwners> findByEmailAndPassword(String email, String password);
 
-     Optional<RoomRental> findByEmail(String email);
+     Optional<RoomOwners> findByEmail(String email);
 }
