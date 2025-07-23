@@ -13,16 +13,71 @@
     <!-- Custom CSS -->
     <link th:href="@{../css/styles.css}" rel="stylesheet">
     <style>
+        .popup {
+              background-color: #fff;
+              border-radius: 7px;
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translate(-50%, -50%) scale(0.1);
+              text-align: center;
+              padding: 0 30px 30px;
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+              color: #333;
+              visibility: hidden;
+              transition: transform 2s, top 3s;
+              z-index: 1;
+            }
 
+            .popup img {
+              width: 100px;
+              margin-top: -50px;
+              border-radius: 50%;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .popup h2 {
+              font-size: 38px;
+              font-weight: 500;
+              margin: 30px 0 10px;
+            }
+
+            .popup button {
+              width: 100%;
+              margin-top: 50px;
+              padding: 10px 0;
+              background: #6fd649;
+              color: #fff;
+              border: 0;
+              font-size: 18px;
+              border-radius: 4px;
+              cursor: pointer;
+              box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .open-popup {
+              visibility: visible;
+              top: 50%;
+              transform: translate(-50%, -50%) scale(1);
+            }
 
     </style>
 </head>
 <body>
-<script th:if="${after_register}">
-    alert("Registration has been successful");
-</script>
-    <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light auth-page">
-        <div class="container">
+<!--<script th:if="${after_register}">-->
+<!--    alert("Registration has been successful");-->
+<!--</script>-->
+
+<div class="popup open-popup" id="popup" th:if="${after_register}">
+    <img src="../Images/tick.png">
+    <h2>Thank You!</h2>
+    <p>Company registration has been successful, Thanks!</p>
+    <button type="button" id="closeBTN">OK</button>
+</div>
+
+    <div  class="min-vh-100 d-flex align-items-center justify-content-center bg-light auth-page" >
+        <div id="parentcontainer"
+             class="container" th:style="${after_register} ? 'visibility:hidden' : 'visibility:visible'">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
                     <div class="card shadow-lg border-0">
@@ -148,6 +203,11 @@
                 toggleIcon.classList.add('bi-eye');
             }
         });
+
+        document.getElementById("closeBTN").addEventListener('click', function () {
+        document.getElementById("parentcontainer").style.visibility = "visible";
+        document.getElementById("popup").classList.remove("open-popup");
+  });
 
         function removeInvalid(){
             const emailError=document.getElementById('email2');
