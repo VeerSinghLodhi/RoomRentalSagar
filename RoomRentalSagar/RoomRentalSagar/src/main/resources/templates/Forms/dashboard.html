@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - RoomRental</title>
+    <title>Dashboard - RoomRentalSagar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -18,10 +18,6 @@
         }
 
         .sidebar {
-            min-height: 100vh;
-        }
-
-        .sidebar {
             position: fixed;
             top: 0;
             bottom: 0;
@@ -29,6 +25,7 @@
             z-index: 100;
             padding: 70px 0 0;
             box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+             min-height: 100vh;
         }
 
         .sidebar .nav-link {
@@ -65,7 +62,7 @@
         </button>
 
         <!-- Brand -->
-        <a class="navbar-brand d-flex align-items-center" href="/home">
+        <a class="navbar-brand d-flex align-items-center" href="#">
             <i class="bi bi-house-door text-warning me-2 fs-3"></i>
             <span class="fw-bold fs-5">Room<span class="text-warning">Rental</span>Sagar</span>
         </a>
@@ -113,18 +110,24 @@
                 <hr>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown"
+                        <a class="dropdown-toggle ms-3 d-flex align-items-center text-decoration-none text-dark"  id="navbarDropdown"
                            role="button" data-bs-toggle="dropdown">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40"
+                            <img th:if="roomowner.profile_pic" src="../Images/no-dp-mood-off_9.jpg"
                                  alt="Profile" class="rounded-circle me-2"
                                  style="width: 32px; height: 32px; object-fit: cover;"
-                                 th:text="${roomRental.firstname} +' '+${roomRental.lastname} ">
+                                 th:text="${roomowner.firstname} +' '+${roomowner.lastname} ">
+                            <img th:unless="roomowner.profile_pic" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&h=40"
+                                 alt="Profile" class="rounded-circle me-2"
+                                 style="width: 32px; height: 32px; object-fit: cover;"
+                                 th:text="${roomowner.firstname} +' '+${roomowner.lastname} ">
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#profile"><i
+                            <li><a class="dropdown-item nav-link" href="#profile" ><i
                                     class="bi bi-person me-2"></i>Profile</a></li>
                             <li><a class="dropdown-item" href="#settings"><i
                                     class="bi bi-gear me-2"></i>Settings</a></li>
+                            <li><a class="dropdown-item nav-link" href="#change-password"><i
+                                    class="bi bi-lock me-2"></i>Change Password</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -428,6 +431,23 @@
                 </div>
 
                 <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center">
+                                <img id="setimage1" th:if="roomowner.profile_pic" src="../Images/no-dp-mood-off_9.jpg"
+                                     class="rounded-circle mb-3"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
+                                <img id="setimage2" th:unless="roomowner.profile_pic" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
+                                     class="rounded-circle mb-3"
+                                     style="width: 120px; height: 120px; object-fit: cover;">
+                                <h5 th:text="${roomowner.firstname} +' '+ ${roomowner.lastname}"></h5>
+                                <!--                                    <p class="text-muted">Landlord since 2019</p>-->
+                                <button th:if="roomowner.profile_pic" onclick="document.getElementById('fileInput').click()" class="btn btn-outline-primary">Add Profile Photo</button>
+                                <button th:unless="roomowner.profile_pic" onclick="document.getElementById('fileInput').click()" class="btn btn-outline-primary">Change Photo</button>
+                                <input type="file" id="fileInput" accept="image/*" onchange="handleFile(this)" style="display:none;" />
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-lg-8">
                         <div class="card border-0 shadow-sm">
                             <div class="card-body">
@@ -436,27 +456,30 @@
                                         <div class="col-md-6">
                                             <label for="firstName" class="form-label">First Name</label>
                                             <input type="text" class="form-control" id="firstName"
-                                                   th:value="${roomRental.firstname}">
+                                                   th:value="${roomowner.firstname}">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="lastName" class="form-label">Last Name</label>
                                             <input type="text" class="form-control"
-                                                   th:value="${roomRental.lastname}" id="lastName">
+                                                   th:value="${roomowner.lastname}" id="lastName">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="email" class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email"
-                                                   th:value="${roomRental.email}" readonly>
+                                                   th:value="${roomowner.email}" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="phone" class="form-label">Phone</label>
                                             <input type="tel" class="form-control" id="phone"
-                                                   th:value="${roomRental.phonenumber}">
+                                                   th:value="${roomowner.phonenumber}">
                                         </div>
                                         <div class="col-12">
-                                            <label for="bio" class="form-label">Bio</label>
-                                            <textarea class="form-control" id="bio"
-                                                      rows="3">Experienced landlord with 5+ years in property management. Committed to providing quality housing and excellent tenant experience.</textarea>
+                                            <label for="address1" class="form-label">Address</label>
+                                            <textarea th:if="${roomowner.address==null}" onkeyup="addressFunction()" class="form-control is-invalid" id="address1"
+                                                      rows="3" placeholder="You haven’t posted your address yet!" required></textarea>
+                                            <textarea th:unless="${roomowner.address==null}" th:text="${roomowner.address}" class="form-control" id="address2"
+                                                      rows="3" required></textarea>
+<!--                                            Experienced landlord with 5+ years in property management. Committed to providing quality housing and excellent tenant experience.-->
                                         </div>
                                     </div>
                                 </form>
@@ -464,15 +487,42 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
-                        <div class="card border-0 shadow-sm">
-                            <div class="card-body text-center">
-                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&h=150"
-                                     class="rounded-circle mb-3"
-                                     style="width: 120px; height: 120px; object-fit: cover;">
-                                <h5 th:text="${roomRental.firstname} +' '+ ${roomRental.lastname}"></h5>
-                                <!--                                    <p class="text-muted">Landlord since 2019</p>-->
-                                <button class="btn btn-outline-primary">Change Photo</button>
+
+                </div>
+            </div>
+<!--        Change Password section    -->
+            <div id="change-password" class="dashboard-section" style="display: none;">
+               <div>
+                <h1 class="text-center h2">Change Password Section</h1>
+               </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card border-0 shadow-sm">
+                                <div class="card-body">
+                            <form>
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="firstName" class="form-label">Old Password</label>
+                                        <input type="password" class="form-control" id="oldpassword"
+                                               required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="lastName" class="form-label">New Password</label>
+                                        <input type="password" class="form-control"
+                                               required id="newpassword">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="email" class="form-label">Confirm Password</label>
+                                        <input type="email" class="form-control" id="confirmpassword"
+                                                required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-primary w-100"><i class="bi bi-key-fill me-4"></i>Change Password</button>
+                                    </div>
+                                </div>
+                            </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -487,6 +537,19 @@
 
 <!-- Custom JavaScript -->
 <script>
+
+    function addressFunction(){
+        const address=document.getElementById('address1');
+        if(address.value.length==1)
+            address.value=address.value.trim();
+        if(address.value.length>0){
+            address.classList.remove('is-invalid');
+        }else{
+            address.classList.add('is-invalid');
+        }
+    }
+
+
     // Dashboard Navigation
     document.addEventListener('DOMContentLoaded', function () {
         const navLinks = document.querySelectorAll('.sidebar .nav-link');
@@ -521,6 +584,21 @@
     function toggleSidebar() {
         const sidebar = document.querySelector('.sidebar');
         sidebar.classList.toggle('show');
+    }
+
+
+     function handleFile(input) {
+        const file = input.files[0];
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          document.getElementById('setimage1').src = e.target.result;
+           document.getElementById('setimage2').src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      }
     }
 
     // Add room functionality
