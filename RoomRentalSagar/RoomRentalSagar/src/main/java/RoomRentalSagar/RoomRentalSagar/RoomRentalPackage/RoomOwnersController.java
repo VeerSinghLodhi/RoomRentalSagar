@@ -92,6 +92,7 @@ public class RoomOwnersController {
         RoomOwners roomOwners=(RoomOwners)session.getAttribute("roomowner");
         session.setAttribute("roomowner",roomOwners);
         model.addAttribute("roomowner",roomOwners);
+
         return "Forms/dashboard";
     }
 
@@ -109,6 +110,26 @@ public class RoomOwnersController {
         model.addAttribute("password",password);
         model.addAttribute("invalid","Invalid credential");
         return "Forms/login";
+    }
+
+    @PostMapping("/updatepass")
+    public String getUpdatePassword(String oldpassword,String newpassword,Model model,HttpSession session){
+
+        RoomOwners roomOwners=(RoomOwners)session.getAttribute("roomowner");
+        Optional<RoomOwners> roomRental=roomRentalRepository.findByEmailAndPassword(roomOwners.getEmail(),oldpassword);
+
+        session.setAttribute("roomowner",roomRental.get());
+        model.addAttribute("roomowner",roomRental.get());
+        if(!roomRental.isPresent()){
+            model.addAttribute("oldpasswordisnotcorrect",true);
+            return "Forms/dashboard";
+        }
+        roomRentalRepository.getUpdatePassword(roomOwners.getEmail(),newpassword);
+
+
+        model.addAttribute("passwordUpdated",true);
+        System.out.println("Password Updated");
+        return "Forms/dashboard";
     }
 
    
