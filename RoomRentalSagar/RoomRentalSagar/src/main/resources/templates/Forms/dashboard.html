@@ -109,6 +109,179 @@
                 </ul>
                 <hr>
                 <ul class="navbar-nav ms-auto">
+               <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - RoomRentalSagar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link th:href="@{../css/styles.css}" rel="stylesheet">
+    <style>
+        body {
+            font-size: 0.875rem;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 70px 0 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
+             min-height: 100vh;
+        }
+
+        .sidebar .nav-link {
+            font-weight: 500;
+            color: #333;
+            padding: 0.75rem 1rem;
+            margin: 0.125rem 0;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: var(--primary-color);
+            background-color: rgba(13, 110, 253, 0.1);
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 0.5rem;
+        }
+
+        .popup {
+              background-color: #fff;
+              border-radius: 7px;
+              position: absolute;
+              top: 0;
+              left: 50%;
+              transform: translate(-50%, -50%) scale(0.1);
+              text-align: center;
+              padding: 0 30px 30px;
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+              color: #333;
+              visibility: hidden;
+              transition: transform 2s, top 3s;
+              z-index: 1;
+            }
+
+            .popup img {
+              width: 100px;
+              margin-top: -50px;
+              border-radius: 50%;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .popup h2 {
+              font-size: 38px;
+              font-weight: 500;
+              margin: 30px 0 10px;
+            }
+
+            .popup button {
+              width: 100%;
+              margin-top: 50px;
+              padding: 10px 0;
+              background: #6fd649;
+              color: #fff;
+              border: 0;
+              font-size: 18px;
+              border-radius: 4px;
+              cursor: pointer;
+              box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+            }
+
+            .open-popup {
+              visibility: visible;
+              top: 50%;
+              transform: translate(-50%, -50%) scale(1);
+            }
+    </style>
+</head>
+
+<body>
+
+<div class="popup open-popup" id="popup" th:if="${passwordUpdated==true}">
+    <img src="../Images/tick.png">
+    <h2>Password Updated!</h2>
+    <p>Password has been successful, Thanks!</p>
+    <button type="button" id="closeBTN">OK</button>
+</div>
+
+<script>
+    document.getElementById("closeBTN").addEventListener('click', function () {
+       document.getElementById("popup").classList.remove("open-popup");
+ });
+</script>
+
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-2 shadow">
+    <div class="container-fluid">
+        <!-- Sidebar Toggle Button (visible on small screens) -->
+        <button class="btn btn-outline-light d-md-none me-2" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <i class="bi bi-house-door text-warning me-2 fs-3"></i>
+            <span class="fw-bold fs-5">Room<span class="text-warning">Rental</span>Sagar</span>
+        </a>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#overview">
+                            <i class="bi bi-speedometer2 me-2"></i>Overview
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#my-rooms">
+                            <i class="bi bi-house me-2"></i>My Rooms
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bookings">
+                            <i class="bi bi-calendar-check me-2"></i>Bookings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#inquiries">
+                            <i class="bi bi-chat-dots me-2"></i>Inquiries
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#earnings">
+                            <i class="bi bi-currency-dollar me-2"></i>Earnings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#profile">
+                            <i class="bi bi-person me-2"></i>Profile
+                        </a>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
                         <a class="dropdown-toggle ms-3 d-flex align-items-center text-decoration-none text-dark"  id="navbarDropdown"
                            role="button" data-bs-toggle="dropdown">
@@ -497,24 +670,27 @@
                </div>
                 <div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card border-0 shadow-sm">
+                        <div class="col-md-4" ></div>
+                        <div class="col-md-4">
+                            <div class="card border-0 shadow-sm mt-5">
                                 <div class="card-body">
-                            <form>
+                            <form th:action="@{/updatepass}" method="post" >
                                 <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <label for="firstName" class="form-label">Old Password</label>
-                                        <input type="password" class="form-control" id="oldpassword"
+                                    <div class="col-md-12">
+                                        <label for="oldpassword" class="form-label">Old Password</label>
+                                        <input type="password" class="form-control" id="oldpassword" name="oldpassword"
                                                required>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="lastName" class="form-label">New Password</label>
+                                    <div th:if="${oldpasswordisnotcorrect==true}" style="color:red;" onkeyup="this.innerHTML=''">Old password isn't correct</div>
+
+                                    <div class="col-md-12">
+                                        <label for="newpassword" class="form-label">New Password</label>
                                         <input type="password" class="form-control"
-                                               required id="newpassword">
+                                               required id="newpassword" name="newpassword" >
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="email" class="form-label">Confirm Password</label>
-                                        <input type="email" class="form-control" id="confirmpassword"
+                                    <div class="col-md-12">
+                                        <label for="confirmpassword" class="form-label">Confirm Password</label>
+                                        <input type="password" class="form-control" id="confirmpassword"
                                                 required>
                                     </div>
                                     <div class="col-md-12">
@@ -531,6 +707,8 @@
         </main>
     </div>
 </div>
+
+
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
