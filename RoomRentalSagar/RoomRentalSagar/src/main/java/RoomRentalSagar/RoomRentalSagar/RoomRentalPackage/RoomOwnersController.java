@@ -28,6 +28,11 @@ public class RoomOwnersController {
         return "Forms/signup";
     }
 
+    @GetMapping("/login")
+    public String getLogin(){
+        return "Forms/login";
+    }
+
     @PostMapping("/register")
     public String getRegister(HttpSession session, Model model,@RequestParam("userotp") String userOTP){
 
@@ -92,7 +97,6 @@ public class RoomOwnersController {
         RoomOwners roomOwners=(RoomOwners)session.getAttribute("roomowner");
         session.setAttribute("roomowner",roomOwners);
         model.addAttribute("roomowner",roomOwners);
-
         return "Forms/dashboard";
     }
 
@@ -103,7 +107,6 @@ public class RoomOwnersController {
         if(roomRental.isPresent()){
             session.setAttribute("roomowner",roomRental.get());
             model.addAttribute("roomowner",roomRental.get());
-
             return "redirect:/senddashboard";
         }
         model.addAttribute("email",email);
@@ -113,24 +116,41 @@ public class RoomOwnersController {
     }
 
     @PostMapping("/updatepass")
-    public String getUpdatePassword(String oldpassword,String newpassword,Model model,HttpSession session){
+    public String getUpdatePassword(String oldpassword, String newpassword, Model model, HttpSession session) {
 
-        RoomOwners roomOwners=(RoomOwners)session.getAttribute("roomowner");
-        Optional<RoomOwners> roomRental=roomRentalRepository.findByEmailAndPassword(roomOwners.getEmail(),oldpassword);
+        RoomOwners roomOwners = (RoomOwners) session.getAttribute("roomowner");
 
-        session.setAttribute("roomowner",roomRental.get());
-        model.addAttribute("roomowner",roomRental.get());
-        if(!roomRental.isPresent()){
-            model.addAttribute("oldpasswordisnotcorrect",true);
+        // Null check
+        if (roomOwners == null) {
+            model.addAttribute("sessionExpired", true);
+            return "redirect:/login";  // or show a proper error page/message
+        }
+
+        Optional<RoomOwners> checkUser = roomRentalRepository.findByEmailAndPassword(roomOwners.getEmail(), oldpassword);
+        System.out.println("Before if Condition");
+
+        session.setAttribute("roomowner",roomOwners);
+        model.addAttribute("roomowner",roomOwners);
+
+        if (!checkUser.isPresent()) {
+            model.addAttribute("oldpasswordisnotcorrect", true);
+            System.out.println("Inside the if means no password match");
             return "Forms/dashboard";
         }
-        roomRentalRepository.getUpdatePassword(roomOwners.getEmail(),newpassword);
 
+        RoomOwners owner = checkUser.get();
+        owner.setPassword(newpassword);
+        roomRentalRepository.save(owner);
 
-        model.addAttribute("passwordUpdated",true);
+        session.setAttribute("roomowner", owner);
+        model.addAttribute("roomowner", owner);
+        model.addAttribute("passwordUpdated", true);
         System.out.println("Password Updated");
+
         return "Forms/dashboard";
     }
 
-   
+
+
+
 }
